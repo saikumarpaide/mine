@@ -53,13 +53,13 @@ export const TemplateAuditPanel = () => {
     try {
       let resp, data;
       if (templateName) {
-        resp = await fetchApi.fetch('/api/template-audit-backend/validate/templateName', {
+        resp = await fetchApi.fetch('/api/template-audit/validate/templateName', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ templateName }),
         });
       } else if (templateYaml) {
-        resp = await fetchApi.fetch('/api/template-audit-backend/validate/yaml', {
+        resp = await fetchApi.fetch('/api/template-audit/validate/yaml', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ yamlText: templateYaml }),
@@ -96,7 +96,7 @@ export const TemplateAuditPanel = () => {
     try {
       const params = new URLSearchParams();
       Object.entries(filter).forEach(([k, v]) => { if (v) params.append(k, v); });
-      const resp = await fetchApi.fetch(`/api/template-audit-backend/results?${params.toString()}`);
+      const resp = await fetchApi.fetch(`/api/template-audit/results?${params.toString()}`);
       const data = await resp.json();
       setResults(data);
     } catch (e: any) {
