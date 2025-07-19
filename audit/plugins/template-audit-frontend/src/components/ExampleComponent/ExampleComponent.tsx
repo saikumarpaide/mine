@@ -1,4 +1,3 @@
-import React from 'react';
 import { Page } from '@backstage/core-components';
 import { TemplateAuditPanel } from '../TemplateAudit';
 

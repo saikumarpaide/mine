@@ -1,23 +1,14 @@
 
-import { HttpAuthService } from '@backstage/backend-plugin-api';
+import { RootConfigService } from '@backstage/backend-plugin-api';
 import express from 'express';
 import Router from 'express-promise-router';
 import yaml from 'js-yaml';
 import fetch, { Response as FetchResponse } from 'node-fetch';
-import fs from 'fs';
-import path from 'path';
-import { ConfigReader } from '@backstage/config';
 import { InputError } from '@backstage/errors';
 
-export async function createRouter({ httpAuth }: { httpAuth: HttpAuthService }): Promise<express.Router> {
+export async function createRouter({ config }: { config: RootConfigService }): Promise<express.Router> {
   const router = Router();
   router.use(express.json());
-
-  // Load config from app-config.yaml
-  const configPath = path.resolve(process.cwd(), 'app-config.yaml');
-  const config = fs.existsSync(configPath)
-    ? new ConfigReader(yaml.load(fs.readFileSync(configPath, 'utf8')) as any)
-    : undefined;
 
   // In-memory result storage
   const results: any[] = [];
