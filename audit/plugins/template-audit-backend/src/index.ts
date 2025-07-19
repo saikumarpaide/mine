@@ -2,7 +2,7 @@ import { createBackendModule, coreServices } from '@backstage/backend-plugin-api
 import { createRouter } from './router';
 
 export default createBackendModule({
-  pluginId: 'template-audit-backend',
+  pluginId: 'template-audit',
   moduleId: 'main',
   register(env) {
     env.registerInit({
