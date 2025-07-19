@@ -8,11 +8,10 @@ export default createBackendModule({
     env.registerInit({
       deps: {
         httpRouter: coreServices.httpRouter,
-        logger: coreServices.logger,
         config: coreServices.rootConfig,
       },
-      async init({ httpRouter, logger, config }) {
-        httpRouter.use(await createRouter({ logger, config }));
+      async init({ httpRouter, config }) {
+        httpRouter.use(await createRouter({ config }));
       },
     });
   },

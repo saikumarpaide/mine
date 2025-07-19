@@ -42,7 +42,6 @@ export const TemplateAuditPanel = () => {
   const handleClear = () => {
     setTemplateYaml('');
     setTemplateName('');
-    setResults([]);
     setError(null);
     setFilter({ templateName: '', status: '', owner: '', date: '' });
   };
@@ -82,7 +81,7 @@ export const TemplateAuditPanel = () => {
           message: 'Validation successful',
           severity: 'success',
         });
-        setResults([data]);
+        setResults(prev => [data, ...prev]);
       }
     } catch (e: any) {
       setError(e.message);

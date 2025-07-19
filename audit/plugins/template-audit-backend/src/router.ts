@@ -1,4 +1,5 @@
 
+
 import { RootConfigService } from '@backstage/backend-plugin-api';
 import express from 'express';
 import Router from 'express-promise-router';
@@ -6,12 +7,19 @@ import yaml from 'js-yaml';
 import fetch, { Response as FetchResponse } from 'node-fetch';
 import { InputError } from '@backstage/errors';
 
-export async function createRouter({ config }: { config: RootConfigService }): Promise<express.Router> {
+/**
+ * Creates and returns the template audit router with all endpoints and helpers scoped correctly.
+ */
+export async function createRouter(options: { config: RootConfigService }) {
+  const { config } = options;
   const router = Router();
   router.use(express.json());
 
-  // In-memory result storage
-  const results: any[] = [];
+  // Singleton in-memory result storage (shared across all router instances)
+  if (!(global as any).__templateAuditResults) {
+    (global as any).__templateAuditResults = [];
+  }
+  const results: any[] = (global as any).__templateAuditResults;
 
   // Helper: rotate GitHub tokens
   let githubTokens = config?.getOptionalStringArray('templateAudit.github.tokens') || [];
